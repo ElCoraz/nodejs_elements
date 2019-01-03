@@ -86,7 +86,7 @@ application.get('/', function (request, response) {
 
     body+= image1.render();
 
-    var form1 = (new form(1, '/', [(new combobox(2, 'newCombobox', [1,2,3,4,0])), (new input(1, 'newLabel1', 'newText1'))]));
+    var form1 = (new form(1, '/', [(new combobox(2, 'newCombobox', [1,2,3,4,0])), (new input(1, 'newLabel1', 'newText1')), (new listbox(1, [1,2,3])) ]));
 
     body+= form1.render();
     
