@@ -4,7 +4,7 @@ var appRoot      = require('app-root-path');
 var express		 = require('express');
 var bodyParser	 = require('body-parser');
 // *****************************************************************************************
-var object      = require(appRoot + '/class/object');
+var object       = require(appRoot + '/class/object');
 // *****************************************************************************************
 var form         = require(appRoot + '/class/form');
 var image        = require(appRoot + '/class/image');
@@ -25,11 +25,33 @@ module.exports = class body extends object
         super(id);
 
         this.class  = 'class="container"';
+
+        this.values = [];
+    }
+    // *************************************************************************************
+    add(obj)
+    {
+        this.values.push(obj);
     }
     // *************************************************************************************
     body()
     {
-        return '<div ' + ((this.style.length > 0) ? this.style : '') + ' ' + this.class + ' id="' + this.id + '">' + this.value + '</div>';
+        var body = '<div ' + ((this.style.length > 0) ? this.style : '') + ' ' + this.class + ' id="' + this.id + '">';
+
+        this.values.forEach(element => {
+            if(element instanceof object)
+            {
+                body+= element.render();
+            }
+            else
+            {
+                body+= element;
+            }
+        });
+
+        body += '</div>';
+
+        return body;
     }
     // *************************************************************************************
 }

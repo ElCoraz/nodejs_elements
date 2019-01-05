@@ -2,8 +2,9 @@
 var express     = require('express');
 var appRoot     = require('app-root-path');
 //******************************************************************* */
-var image       = require(appRoot + '/class/image');
+var body        = require(appRoot + '/class/body');
 var form        = require(appRoot + '/class/form');
+var image       = require(appRoot + '/class/image');
 var input       = require(appRoot + '/class/input');
 var table       = require(appRoot + '/class/table');
 var button      = require(appRoot + '/class/button');
@@ -27,9 +28,9 @@ function head()
 //******************************************************************* */
 application.get('/', function (request, response) {
     
-    var body = '<div class="container">';
+    var page_body = (new body(1));
 
-    body += head();
+    page_body.add(head());
 
     var button1 = (new button(1, 'Button 1'));
     button1.setOnClickListener('alert (\' Hello world \');');
@@ -44,10 +45,10 @@ application.get('/', function (request, response) {
 
     input2.setOnClickListener('alert (\' Input 1 clicked \');');
 
-    body+= button1.render();
-    body+= button2.render();
+    page_body.add(button1);
+    page_body.add(button2);
 
-    body+= input2.render();
+    page_body.add(input2);
 
     var table1 = (new table(1, ['nomber', 'name', 'count']));
 
@@ -56,7 +57,7 @@ application.get('/', function (request, response) {
 
     table1.remove(0);
 
-    body+= table1.render();
+    page_body.add(table1);
 
     var listbox1 = (new listbox(1, [1,2,3,4,5,6,7,8,9,0]));
 
@@ -65,40 +66,38 @@ application.get('/', function (request, response) {
 
     listbox1.add(11);
 
-    body+= listbox1.render();
+    page_body.add(listbox1);
 
     var combobox1 = (new combobox(1, 'newCombobox', [1,2,3,4,5]));
 
     combobox1.add(8);
     combobox1.remove(0);
 
-    body+= combobox1.render();
+    page_body.add(combobox1);
 
     var checkbox1 = (new checkbox(1, 'checkbox1'));
 
-    body+= checkbox1.render();
+    page_body.add(checkbox1);
 
     var radiobox1 = (new radiobox(1, [1,2,3,4,5,6]));
 
-    body+= radiobox1.render();
+    page_body.add(radiobox1);
 
     var image1 = (new image(1, 'https://r.mradx.net/pictures/8A/12BCFA.jpg'));
 
-    body+= image1.render();
+    page_body.add(image1);
 
     var form1 = (new form(1, '/', [(new combobox(2, 'newCombobox', [1,2,3,4,0])), (new input(1, 'newLabel1', 'newText1')), (new listbox(1, [1,2,3])) ]));
 
-    body+= form1.render();
+    page_body.add(form1);
 
     var tab = table1.toJSON();
 
     var tr = (new table()).fromJSON(tab);
 
-    body+= tr.render();
+    page_body.add(tr);
     
-    body+= '</div>';
-    
-    response.send(body);
+    response.send(page_body.render());
 });
 //******************************************************************* */
 application.listen(3000, "127.0.0.1", function () {
