@@ -4,7 +4,7 @@ var appRoot      = require('app-root-path');
 var express		 = require('express');
 var bodyParser	 = require('body-parser');
 // *****************************************************************************************
-var object      = require(appRoot + '/class/object');
+var object       = require(appRoot + '/class/object');
 // *****************************************************************************************
 module.exports = class radiobox extends object 
 {
@@ -38,6 +38,36 @@ module.exports = class radiobox extends object
 
         return body;
     }
+    // *************************************************************************************
+    toJSON()
+    {
+        return JSON.stringify({ 
+            "id" : this.id,
+            "name" : this.constructor.name,
+            "class" : this.class,
+            "style" : this.style,
+            "script" : this.script,
+            "values" : this.values
+        });
+     }
+    // *************************************************************************************
+    fromJSON(json)
+    {
+        var values = JSON.parse(json);
+
+        if(values.name !== this.constructor.name)
+        {
+            return null;
+        }
+
+        this.id      = values.id;
+        this.class   = values.class;
+        this.style   = values.style;
+        this.script  = values.script;
+        this.values  = values.values;
+
+        return this;
+     }
     // *************************************************************************************
 }
 // *****************************************************************************************

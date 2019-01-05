@@ -4,7 +4,7 @@ var appRoot      = require('app-root-path');
 var express		 = require('express');
 var bodyParser	 = require('body-parser');
 // *****************************************************************************************
-var object      = require(appRoot + '/class/object');
+var object       = require(appRoot + '/class/object');
 // *****************************************************************************************
 module.exports = class listbox extends object 
 {
@@ -50,6 +50,36 @@ module.exports = class listbox extends object
 
         return body;
     }
+    // *************************************************************************************
+    toJSON()
+    {
+        return JSON.stringify({ 
+            "id" : this.id,
+            "name" : this.constructor.name,
+            "lines" : this.lines,
+            "class" : this.class,
+            "style" : this.style,
+            "script" : this.script
+        });
+     }
+    // *************************************************************************************
+    fromJSON(json)
+    {
+        var values = JSON.parse(json);
+
+        if(values.name !== this.constructor.name)
+        {
+            return null;
+        }
+
+        this.id      = values.id;
+        this.lines   = values.lines;
+        this.class   = values.class;
+        this.style   = values.style;
+        this.script  = values.script;
+
+        return this;
+     }
     // *************************************************************************************
 }
 // *****************************************************************************************

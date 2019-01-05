@@ -9,7 +9,7 @@ module.exports = class object
     // *************************************************************************************
     constructor (id) 
     {
-        this.id     = this.constructor.name + id;
+        this.id = this.constructor.name + id;
 
         this.class  = '';
         this.style  = '';
@@ -52,6 +52,34 @@ module.exports = class object
     {
         return ((this.script.length > 0) ? this.script : '') + this.body();
     }
+    // *************************************************************************************
+    toJSON()
+    {
+        return JSON.stringify({ 
+            "id" : this.id,
+            "name" : this.constructor.name,
+            "class" : this.class,
+            "style" : this.style,
+            "script" : this.script
+        });
+     }
+    // *************************************************************************************
+    fromJSON(json)
+    {
+        var values = JSON.parse(json);
+
+        if(values.name !== this.constructor.name)
+        {
+            return null;
+        }
+
+        this.id      = values.id;
+        this.class   = values.class;
+        this.style   = values.style;
+        this.script  = values.script;
+
+        return this;
+     }
     // *************************************************************************************
 }
 // *****************************************************************************************

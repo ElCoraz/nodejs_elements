@@ -2,15 +2,15 @@
 var express     = require('express');
 var appRoot     = require('app-root-path');
 //******************************************************************* */
+var image       = require(appRoot + '/class/image');
+var form        = require(appRoot + '/class/form');
 var input       = require(appRoot + '/class/input');
-var button      = require(appRoot + '/class/button');
 var table       = require(appRoot + '/class/table');
+var button      = require(appRoot + '/class/button');
 var listbox     = require(appRoot + '/class/listbox');
 var combobox    = require(appRoot + '/class/combobox');
 var checkbox    = require(appRoot + '/class/checkbox');
 var radiobox    = require(appRoot + '/class/radiobox');
-var image       = require(appRoot + '/class/image');
-var form        = require(appRoot + '/class/form');
 //******************************************************************* */
 var application = express();
 //******************************************************************* */
@@ -89,6 +89,12 @@ application.get('/', function (request, response) {
     var form1 = (new form(1, '/', [(new combobox(2, 'newCombobox', [1,2,3,4,0])), (new input(1, 'newLabel1', 'newText1')), (new listbox(1, [1,2,3])) ]));
 
     body+= form1.render();
+
+    var tab = table1.toJSON();
+
+    var tr = (new table()).fromJSON(tab);
+
+    body+= tr.render();
     
     body+= '</div>';
     

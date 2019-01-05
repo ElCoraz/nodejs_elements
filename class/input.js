@@ -4,7 +4,7 @@ var appRoot      = require('app-root-path');
 var express		 = require('express');
 var bodyParser	 = require('body-parser');
 // *****************************************************************************************
-var object      = require(appRoot + '/class/object');
+var object       = require(appRoot + '/class/object');
 // *****************************************************************************************
 module.exports = class input extends object 
 {
